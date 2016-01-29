@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PuzzleArea : Datas {
-	private const int pr = 8;		//panelArea size (Row)
-	private const int pc = 8;		//panelArea size (Column)
-	private GameObject[,] panelArray = new GameObject[pr,pc];
+	private const int panel_Row = 7;		//panelArea size (Row)
+	private const int panel_Column = 7;		//panelArea size (Column)
+	private GameObject[,] panelArray = new GameObject[panel_Row,panel_Column];
 	private GameObject[] touchedPanel = new GameObject[2];
 	private int touchCount = 0;
 	private int touchColor;
@@ -66,7 +67,7 @@ public class PuzzleArea : Datas {
 		for(int i = 0; i < 2; i++){
 			touchedPanel[i] = dummyPanel;
 		}
-		SetArray (0, 0, pr - 1, pc - 1);
+		SetArray (0, 0, panel_Row - 1, panel_Column - 1);
 		StartCoroutine("CountDown");
 	}
 	
@@ -99,7 +100,7 @@ public class PuzzleArea : Datas {
 		for (int i=x1; i<=x2; i++) {
 			for (int j =y1; j<=y2; j++) {
 				panelArray[i,j] = 
-					(GameObject) Instantiate (panelPrefab,new Vector3(i*1.1f-3.85f,0.35f-j*1.1f,0),Quaternion.identity);
+					(GameObject) Instantiate (panelPrefab,new Vector3(i*1.25f-3.75f,0.25f-j*1.25f,0),Quaternion.identity);
 				panel = panelArray[i,j];
 				panelPrp = panel.GetComponent<Panel>();
 				panelPrp.panelType = ((int)(100*Random.value)) % 3;
@@ -257,7 +258,7 @@ public class PuzzleArea : Datas {
 			sysPrp.gameClearFlag = true;
 		}
 		yield return new WaitForSeconds(2);
-		Application.LoadLevel ("Result");
+		SceneManager.LoadScene ("Result");
 	}
 //Pause for Menu and Skill (OK)
 	public void Pause(){

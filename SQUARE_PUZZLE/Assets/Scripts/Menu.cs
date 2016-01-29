@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
 
@@ -12,11 +13,11 @@ public class Menu : MonoBehaviour {
 	}
 
 	public void BackToTitle(){
-		Application.LoadLevel ("Title");
+		SceneManager.LoadScene ("Title");
 	}
 
 	public void BackToStageSelect(){
-		Application.LoadLevel ("StageSelect");
+		SceneManager.LoadScene ("StageSelect");
 	}
 
 	public void ResetClearData(){

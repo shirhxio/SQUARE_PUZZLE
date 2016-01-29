@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Gacha : Chara {
 
@@ -41,7 +42,7 @@ public class Gacha : Chara {
 					int i = hit.transform.gameObject.GetComponent<CharaPanel>().partyNo;
 					sysPrp.party[i] = numChara;
 					sysPrp.savePartyFlag = true;
-					Application.LoadLevel("Gacha");
+					SceneManager.LoadScene ("Gacha");
 				}
 			}
 		}
@@ -72,6 +73,6 @@ public class Gacha : Chara {
 	}
 
 	public void GoToTitle(){
-		Application.LoadLevel ("Title");
+		SceneManager.LoadScene ("Title");
 	}
 }

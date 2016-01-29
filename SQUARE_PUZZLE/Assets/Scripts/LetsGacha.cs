@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LetsGacha : MonoBehaviour {
 
@@ -14,6 +15,6 @@ public class LetsGacha : MonoBehaviour {
 	}
 
 	public void GoToGacha(){
-		Application.LoadLevel ("Gacha");
+		SceneManager.LoadScene ("Gacha");
 	}
 }

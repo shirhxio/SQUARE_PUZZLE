@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour {
 
@@ -14,6 +15,6 @@ public class Title : MonoBehaviour {
 	}
 
 	public void GoToStageSelect(){
-		Application.LoadLevel ("StageSelect");
+		SceneManager.LoadScene ("StageSelect");
 	}
 }
