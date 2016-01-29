@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Result : Datas {
 	
@@ -73,6 +74,6 @@ public class Result : Datas {
 
 	public void GoToStageSelect(){
 		sysPrp.gameClearFlag = false;
-		Application.LoadLevel ("StageSelect");
+		SceneManager.LoadScene ("StageSelect");
 	}
 }

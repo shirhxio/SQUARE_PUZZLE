@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CharaPanel : Datas {
 
-	private GameObject sys;
+	private GameObject sys;		//for Systems
 	private Systems sysPrp;
 	private Chara sysChr;
 	private SpriteRenderer charaTexture;
@@ -17,7 +17,6 @@ public class CharaPanel : Datas {
 	public int[] panelBuff = new int[numOfType];
 	private Sprite spriteChara;
 
-	// Use this for initialization
 	void Start () {
 		sys = GameObject.Find ("Systems");
 		sysPrp = sys.GetComponent<Systems> ();
