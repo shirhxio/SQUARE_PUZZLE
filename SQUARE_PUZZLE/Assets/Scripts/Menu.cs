@@ -13,6 +13,7 @@ public class Menu : MonoBehaviour {
 	}
 
 	public void BackToTitle(){
+		Destroy (sys);
 		SceneManager.LoadScene ("Title");
 	}
 

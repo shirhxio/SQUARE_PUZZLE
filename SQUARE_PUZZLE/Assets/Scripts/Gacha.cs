@@ -16,6 +16,7 @@ public class Gacha : Chara {
 	private SpriteRenderer newCharaTexture;
 	private Text scoreBuffText;
 	private Text[] panelBuffText = new Text[numOfType];
+	private GameObject sys;
 	private Systems sysPrp;
 	private Chara sysChr;
 	private Ray2D ray;
@@ -24,8 +25,9 @@ public class Gacha : Chara {
 	// Use this for initialization
 	void Start () {
 		playedGachaFlag = true;
-		sysPrp = GameObject.Find ("Systems").GetComponent<Systems> ();
-		sysChr = GameObject.Find ("Systems").GetComponent<Chara> ();
+		sys = GameObject.Find ("Systems");
+		sysPrp = sys.GetComponent<Systems> ();
+		sysChr = sys.GetComponent<Chara> ();
 		newCharaTexture = newCharaobj.GetComponent<SpriteRenderer> ();
 		scoreBuffText = scoreBuffObj.GetComponent<Text> ();
 		for (int i = 0; i < numOfType; i++) {
@@ -73,6 +75,7 @@ public class Gacha : Chara {
 	}
 
 	public void GoToTitle(){
+		Destroy (sys);
 		SceneManager.LoadScene ("Title");
 	}
 }

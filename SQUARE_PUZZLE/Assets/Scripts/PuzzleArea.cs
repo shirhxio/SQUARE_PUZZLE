@@ -7,17 +7,22 @@ public class PuzzleArea : Datas {
 	private const int panel_Row = 7;		//panelArea size (Row)
 	private const int panel_Column = 7;		//panelArea size (Column)
 	private GameObject[,] panelArray = new GameObject[panel_Row,panel_Column];
+
 	private GameObject[] touchedPanel = new GameObject[2];
 	private int touchCount = 0;
 	private int touchColor;
+
 	private int totalScoreBuff = 100;						//magnification of Score(%)
 	private int[] totalPanelBuff = new int[numOfType];		//magnification of panelscore(%)
+
 	private int currentScore;
 	private int[] currentPanelScore = new int[numOfType];
 	private Text scoreText;
 	private Text[] panelScoreText = new Text[numOfType];
-	private int countTime = 3; 
+
+	private int countTime = 3; 								//time of countdown(start)
 	private float timeLimit = 30.0f;
+
 	public GameObject panelPrefab;
 	public GameObject dummyPanel;
 	public GameObject countdownObj;
@@ -26,7 +31,7 @@ public class PuzzleArea : Datas {
 	public GameObject[] panelScoreObj = new GameObject[numOfType];
 	public Sprite[] panelSprites;
 	public GameObject[] partyMember = new GameObject[partySize];
-	private bool isPlaying = false;
+	public GameObject[] attackPrefab = new GameObject[numOfType];
 
 	private GameObject sys;
 	private Systems sysPrp;
@@ -38,6 +43,8 @@ public class PuzzleArea : Datas {
 	private Text timerText;
 	private Ray2D ray;
 	private RaycastHit2D hit;
+	private bool isPlaying = false;
+	private int layerMask = 3 << 8;
 
 	// Use this for initialization
 	void Start () {
@@ -79,7 +86,7 @@ public class PuzzleArea : Datas {
 	// Update is called once per frame
 	void Update () {
 		if (isPlaying && Input.GetMouseButtonDown (0)) {
-			hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
+			hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero, 10, layerMask);
 			if(hit){
 				if (hit.transform.gameObject.tag == "panel") {
 					OnTouchPanel (hit.transform.gameObject);
@@ -131,12 +138,14 @@ public class PuzzleArea : Datas {
 		}
 		numOfPanels = (x2 - x1 + 1) * (y2 - y1 + 1);
 		panelPrp = panelArray [x1, y1].GetComponent<Panel> ();
+		int type_DP = panelPrp.panelType;
 		currentScore += (numOfPanels * (totalScoreBuff + numOfPanels)) / 10;
-		currentPanelScore [panelPrp.panelType] += (numOfPanels * totalPanelBuff [panelPrp.panelType]) / 100;
+		currentPanelScore [type_DP] += (numOfPanels * totalPanelBuff [type_DP]) / 100;
 		scoreText.text = currentScore.ToString ("###0");
-		panelScoreText [panelPrp.panelType].text = currentPanelScore [panelPrp.panelType].ToString ("###0");
+		panelScoreText [type_DP].text = currentPanelScore [type_DP].ToString ("###0");
 		for (int i = x1; i <= x2; i++) {
 			for (int j = y1; j <= y2; j++) {
+				Instantiate (attackPrefab [type_DP], panelArray [i, j].transform.position, Quaternion.identity);
 				Destroy (panelArray [i, j]);
 			}
 		}
