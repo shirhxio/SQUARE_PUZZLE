@@ -20,6 +20,7 @@ public class PuzzleArea : Datas {
 	private float timeLimit = 30.0f;
 	public GameObject panelPrefab;
 	public GameObject dummyPanel;
+	public GameObject countdownObj;
 	public GameObject timer;
 	public GameObject scoreObj;
 	public GameObject[] panelScoreObj = new GameObject[numOfType];
@@ -33,6 +34,7 @@ public class PuzzleArea : Datas {
 	private Panel[] touchedPanelPrp = new Panel[2];
 	private SpriteRenderer panelTexture;
 	private GameObject panel;
+	private Text countdownText;
 	private Text timerText;
 	private Ray2D ray;
 	private RaycastHit2D hit;
@@ -63,7 +65,10 @@ public class PuzzleArea : Datas {
 			panelScoreText[i] = panelScoreObj[i].GetComponent<Text>();
 			panelScoreText[i].text = currentPanelScore[i].ToString("###0");
 		}
+		countdownObj.SetActive (true);
+		countdownText = countdownObj.GetComponent<Text> ();
 		timerText = timer.GetComponent<Text> ();
+		timerText.text = timeLimit.ToString("#0.0");
 		for(int i = 0; i < 2; i++){
 			touchedPanel[i] = dummyPanel;
 		}
@@ -230,12 +235,13 @@ public class PuzzleArea : Datas {
 //CountDown of Start (OK)
 	private IEnumerator CountDown(){
 		for(int count = countTime; count > 0; count--) {
-			timerText.text = count.ToString();
+			countdownText.text = count.ToString();
 			yield return new WaitForSeconds (1);
 		}
-		timerText.text = "Start!";
+		countdownText.text = "START!";
 		isPlaying = true;
-		yield return new WaitForSeconds (1);
+		yield return new WaitForSeconds (0.5f);
+		countdownObj.SetActive (false);
 		StartCoroutine("StartTimer");
 	}
 //Print Timer (OK)
@@ -247,6 +253,8 @@ public class PuzzleArea : Datas {
 			count -= 0.1f;
 		}
 		timerText.text = "Finish";
+		countdownObj.SetActive (true);
+		countdownText.text = "Finish!";
 		isPlaying = false;
 		sysPrp.resultScore = currentScore;
 		sysPrp.resultPanel = currentPanelScore;
@@ -257,7 +265,7 @@ public class PuzzleArea : Datas {
 			sysPrp.saveStageFlag = true;
 			sysPrp.gameClearFlag = true;
 		}
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(1.5f);
 		SceneManager.LoadScene ("Result");
 	}
 //Pause for Menu and Skill (OK)
