@@ -180,6 +180,13 @@ public class PuzzleArea : Datas {
 			touchColor = panelPrp.panelType;
 			touchedPanel[0] = obj;
 			touchedPanelPrp[0] = panelPrp;
+			for (int i = 0; i < panel_Row; i++) {
+				for (int j = 0; j < panel_Column; j++) {
+					if (panelArray [i,j].GetComponent<Panel> ().panelType != touchColor) {
+						ChangeColor (panelArray [i,j], 0.5f);
+					}
+				}
+			}
 			touchCount++;
 		} else if (touchCount == 1) {
 			if (touchColor == panelPrp.panelType) {
@@ -227,8 +234,10 @@ public class PuzzleArea : Datas {
 //Reset touched panels (OK)
 	private void ResetTouchedPanel(){
 		touchCount = 0;
-		foreach(GameObject touched in touchedPanel){
-			ChangeColor(touched,1);
+		for(int i = 0; i < panel_Row; i++){
+			for (int j = 0; j < panel_Column; j++) {
+				ChangeColor (panelArray [i,j], 1);
+			}
 		}
 		for(int i = 0; i < 2; i++){
 			touchedPanel[i] = dummyPanel;
