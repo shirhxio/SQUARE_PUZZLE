@@ -25,6 +25,7 @@ public class PuzzleArea : Datas {
 
 	public GameObject panelPrefab;
 	public GameObject dummyPanel;
+	public GameObject[] touchedPanelBack = new GameObject[2];
 	public GameObject countdownObj;
 	public GameObject timer;
 	public GameObject scoreObj;
@@ -176,7 +177,7 @@ public class PuzzleArea : Datas {
 	private void OnTouchPanel(GameObject obj){
 		panelPrp = obj.GetComponent<Panel> ();
 		if (touchCount == 0) {
-			ChangeColor (obj, 0.7f);
+			touchedPanelBack [0].transform.position = obj.transform.position;
 			touchColor = panelPrp.panelType;
 			touchedPanel[0] = obj;
 			touchedPanelPrp[0] = panelPrp;
@@ -196,7 +197,7 @@ public class PuzzleArea : Datas {
 				         && (panelPrp.y == touchedPanelPrp[0].y)){
 					ResetTouchedPanel();
 				}else{
-					ChangeColor(obj, 0.7f);
+					touchedPanelBack [1].transform.position = obj.transform.position;
 					touchedPanel[1] = obj;
 					touchedPanelPrp[1] = panelPrp;
 					touchCount++;
@@ -241,6 +242,7 @@ public class PuzzleArea : Datas {
 		}
 		for(int i = 0; i < 2; i++){
 			touchedPanel[i] = dummyPanel;
+			touchedPanelBack [i].transform.position = new Vector3 (-8, 0, 0);
 		}
 	}
 //Change the transparency of obj (OK)
