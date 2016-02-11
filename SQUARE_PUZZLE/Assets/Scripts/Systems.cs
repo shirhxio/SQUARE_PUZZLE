@@ -24,6 +24,7 @@ public class Systems: Datas {
 
 	// Use this for initialization
 	void Start () {
+		Application.targetFrameRate = 60;
 		for (int i = 0; i < partySize; i++) {
 			PARTY_KEY[i] = "PARTY" + i + "_KEY";
 			party[i] = PlayerPrefs.GetInt(PARTY_KEY[i],(i%3)*100);
