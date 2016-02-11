@@ -11,7 +11,6 @@ public class Attack : MonoBehaviour {
 	}
 
 	void Update () {
-		vec = enemyPos - transform.position;
 		transform.position += vec * speed * Time.deltaTime;
 	}
 }
