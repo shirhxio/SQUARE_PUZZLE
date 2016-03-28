@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 /*
-	Scene'Main'の制御
+	Scene'Main'の制御であるPuzzleAreaとだいたい同じ
 	パズルエリアの操作認識やパネルの生成・破壊、四角形の判定などを行う。
 	スコア、時間の制御なども行っている。
 	大きく分けて、
@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 	・TimeLimitなどの時間制御関連
 	の３つがある。
 */
-public class PuzzleArea : Datas {
+public class Tutorial : Datas {
 	private const int panel_Row = 7;		// panelAreaの行数
 	private const int panel_Column = 7;		// panelAreaの列数
 	private GameObject[,] panelArray = new GameObject[panel_Row,panel_Column];	// panelを保持しておく配列
@@ -43,6 +43,8 @@ public class PuzzleArea : Datas {
 	[SerializeField]
 	private GameObject[] touchedPanelBack = new GameObject[2];
 	[SerializeField]
+	private GameObject handcursor;		// Tutorial特有 handcursorのプレハブ
+	[SerializeField]
 	private GameObject countdownObj;
 	[SerializeField]
 	private GameObject timerObj;
@@ -54,7 +56,6 @@ public class PuzzleArea : Datas {
 	private Sprite[] panelSprites;
 	public GameObject[] partyMember = new GameObject[partySize];
 	public GameObject[] attackEffectPrefab = new GameObject[numOfType];
-
 
 	private GameObject sys;					// Systems参照用
 	private Systems sysPrp;					// SystemsのSystemsコンポーネント参照用
@@ -128,7 +129,7 @@ public class PuzzleArea : Datas {
 		}
 	}
 
-/*	Androidとかでやる場合はmousePositionでやるよりはtouchを使う
+	/*	Androidとかでやる場合はmousePositionでやるよりはtouchを使う
 	void Update () {
 		if (isPlaying && Input.GetTouch(0).phase == TouchPhase.Began) {
 			hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.GetTouch(0).position), Vector2.zero, 10, layerMask);
@@ -193,12 +194,12 @@ public class PuzzleArea : Datas {
 		else if (touchCount == 2 && touchColor == panelPrp.panelType) {
 			// 一つ目のパネルとタッチされたパネルが四角形の対角となるとき
 			if ((!(panelPrp.x == touchedPanelPrp [0].x) && !(panelPrp.y == touchedPanelPrp [0].y))
-			   && ((panelPrp.x == touchedPanelPrp [1].x) || (panelPrp.y == touchedPanelPrp [1].y))) {
+				&& ((panelPrp.x == touchedPanelPrp [1].x) || (panelPrp.y == touchedPanelPrp [1].y))) {
 				StartCoroutine (CheckCorner (touchedPanelPrp [0].x, touchedPanelPrp [0].y, panelPrp.x, panelPrp.y, touchColor));
 			} 
 			// 二つ目のパネルとタッチされたパネルが四角形の対角となるとき
 			else if ((!(panelPrp.x == touchedPanelPrp [1].x) && !(panelPrp.y == touchedPanelPrp [1].y))
-			         && ((panelPrp.x == touchedPanelPrp [0].x) || (panelPrp.y == touchedPanelPrp [0].y))) {
+				&& ((panelPrp.x == touchedPanelPrp [0].x) || (panelPrp.y == touchedPanelPrp [0].y))) {
 				StartCoroutine (CheckCorner (touchedPanelPrp [1].x, touchedPanelPrp [1].y, panelPrp.x, panelPrp.y, touchColor));
 			} 
 			// 四角形が成立しないとき
@@ -305,7 +306,7 @@ public class PuzzleArea : Datas {
 		}
 	}
 
-/*	// panelArray[x, y]のpanelを消し、スコアを加算、アタックエフェクトの生成する
+	/*	// panelArray[x, y]のpanelを消し、スコアを加算、アタックエフェクトの生成する
 	private void DestroyPanel(int x,int y){
 		// スコアを消したパネルのスコアを加算、表示の更新
 		panelPrp = panelArray [x, y].GetComponent<Panel> ();

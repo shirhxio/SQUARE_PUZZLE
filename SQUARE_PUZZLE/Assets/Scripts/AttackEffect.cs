@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Attack : MonoBehaviour {
+public class AttackEffect : MonoBehaviour {
 	private float speed = 2.0f;
 	private Vector3 vec;
 	private Vector3 enemyPos = new Vector3 (0, 4.5f, 0);
